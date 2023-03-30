@@ -18,6 +18,7 @@ class Api {
     const response = await fetch(`${this._baseUsl}/users/me`, {
       method: 'GET',
       headers: this._headers,
+      credentials: 'include',
     });
     return this._checkResponse(response);
   }
@@ -30,6 +31,7 @@ class Api {
         name: data.name,
         about: data.about,
       }),
+      credentials: 'include',
     });
     return this._checkResponse(response);
   }
@@ -38,7 +40,7 @@ class Api {
     const response = await fetch(`${this._baseUsl}/cards`, {
       method: 'GET',
       headers: this._headers,
-      credentials: 'include'
+      credentials: 'include',
     });
     return this._checkResponse(response);
   }
@@ -51,6 +53,7 @@ class Api {
         name: data['name'],
         link: data['link'],
       }),
+      credentials: 'include',
     });
     return this._checkResponse(response);
   }
@@ -59,6 +62,7 @@ class Api {
     const response = await fetch(`${this._baseUsl}/cards/${data._id}`, {
       method: 'DELETE',
       headers: this._headers,
+      credentials: 'include',
     });
     return this._checkResponse(response);
   }
@@ -67,6 +71,7 @@ class Api {
     const response = await fetch(`${this._baseUsl}/cards/${cardId}/likes`, {
       method: !isLike ? 'PUT' : 'DELETE',
       headers: this._headers,
+      credentials: 'include',
     });
     return this._checkResponse(response);
   }
@@ -78,6 +83,7 @@ class Api {
       body: JSON.stringify({
         avatar: data.avatar,
       }),
+      credentials: 'include',
     });
     return this._checkResponse(response);
   }

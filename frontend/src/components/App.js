@@ -201,7 +201,7 @@ function App() {
     auth
       .login(formValue)
       .then((data) => {
-        Cookie.set('jwt', data.token, { path: '/' });
+        Cookie.set('jwt', data.token);
         // localStorage.setItem('jwt', data.token);
         setLoggedIn(true);
         navigate('/', { replace: true });

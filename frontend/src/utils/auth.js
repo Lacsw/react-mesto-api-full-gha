@@ -18,6 +18,7 @@ class Auth {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
+      credentials: 'include',
     });
     return this._checkResponse(response);
   }
@@ -29,6 +30,7 @@ class Auth {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
+      credentials: 'include',
     });
     return this._checkResponse(response);
   }
