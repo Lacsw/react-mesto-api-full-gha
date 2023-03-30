@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import Cookie from 'js-cookie';
 
 import api from '../utils/api';
 import auth from '../utils/auth';
@@ -84,21 +85,23 @@ function App() {
       });
   }
 
-  useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      auth
-        .checkAuth(token)
-        .then((data) => {
-          setLoggedIn(true);
-          setUserEmail(data.data.email);
-          navigate('/');
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   // const token = localStorage.getItem('jwt');
+  //   const token = Cookie.get('jwt');
+  //   console.log(document.cookie);
+  //   if (token) {
+  //     auth
+  //       .checkAuth(token)
+  //       .then((data) => {
+  //         setLoggedIn(true);
+  //         setUserEmail(data.data.email);
+  //         navigate('/');
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // }, [navigate]);
 
   useEffect(() => {
     if (loggedIn) {
@@ -198,7 +201,8 @@ function App() {
     auth
       .login(formValue)
       .then((data) => {
-        localStorage.setItem('jwt', data.token);
+        Cookie.set('jwt', data.token, { path: '/' });
+        // localStorage.setItem('jwt', data.token);
         setLoggedIn(true);
         navigate('/', { replace: true });
       })

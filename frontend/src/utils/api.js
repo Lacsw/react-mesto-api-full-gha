@@ -1,3 +1,5 @@
+import Cookie from 'js-cookie';
+
 class Api {
   constructor(options) {
     this._baseUsl = options.baseUrl;
@@ -36,6 +38,7 @@ class Api {
     const response = await fetch(`${this._baseUsl}/cards`, {
       method: 'GET',
       headers: this._headers,
+      credentials: 'include'
     });
     return this._checkResponse(response);
   }
@@ -83,8 +86,6 @@ class Api {
 const api = new Api({
   baseUrl: 'http://mesto.api.nomoredomains.work',
   headers: {
-    // authorization: '9a596bd9-c6d6-4de4-b642-ea24a3ef64a1',
-    'Accept': 'application/json',
     'Content-Type': 'application/json',
   },
 });
