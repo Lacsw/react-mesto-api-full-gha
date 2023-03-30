@@ -85,23 +85,23 @@ function App() {
       });
   }
 
-  // useEffect(() => {
-  //   // const token = localStorage.getItem('jwt');
-  //   const token = Cookie.get('jwt');
-  //   console.log(document.cookie);
-  //   if (token) {
-  //     auth
-  //       .checkAuth(token)
-  //       .then((data) => {
-  //         setLoggedIn(true);
-  //         setUserEmail(data.data.email);
-  //         navigate('/');
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    const token = Cookie.get('jwt');
+    
+    if (token) {
+      auth
+        .checkAuth()
+        .then((data) => {
+          setLoggedIn(true);
+          setUserEmail(data.data.email);
+          navigate('/');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [navigate]);
+
 
   useEffect(() => {
     if (loggedIn) {
@@ -202,7 +202,6 @@ function App() {
       .login(formValue)
       .then((data) => {
         Cookie.set('jwt', data.token);
-        // localStorage.setItem('jwt', data.token);
         setLoggedIn(true);
         navigate('/', { replace: true });
       })
