@@ -216,7 +216,7 @@ function App() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('jwt');
+    Cookie.remove('jwt');
     setLoggedIn(false);
     navigate('/sing-in');
   };
