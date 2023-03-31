@@ -93,7 +93,7 @@ function App() {
         .checkAuth()
         .then((data) => {
           setLoggedIn(true);
-          setUserEmail(data.data.email);
+          setUserEmail(data.email);
           navigate('/');
         })
         .catch((error) => {

@@ -1,5 +1,3 @@
-import Cookie from 'js-cookie';
-
 class Api {
   constructor(options) {
     this._baseUsl = options.baseUrl;
