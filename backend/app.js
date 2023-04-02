@@ -9,7 +9,7 @@ const errorHandler = require('./middlewares/error-handler');
 const cors = require('./middlewares/cors-handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
