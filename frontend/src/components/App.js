@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import Cookie from 'js-cookie';
 
 import api from '../utils/api';
 import auth from '../utils/auth';
@@ -210,9 +209,10 @@ function App() {
   };
 
   const handleLogout = () => {
-    Cookie.remove('jwt');
-    setLoggedIn(false);
-    navigate('/sing-in');
+    auth.signout().then((data) => {
+      setLoggedIn(false);
+      navigate('/sign-in');
+    });
   };
 
   return (

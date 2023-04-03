@@ -45,6 +45,17 @@ class Auth {
     });
     return this._checkResponse(response);
   }
+
+  async signout() {
+    const response = await fetch(`${this._baseUsl}/signout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+    return this._checkResponse(response);
+  }
 }
 
 const auth = new Auth({

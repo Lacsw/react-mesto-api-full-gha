@@ -6,6 +6,7 @@ const authRouter = require('./auth');
 const usersRouter = require('./users');
 const cardsRouter = require('./cards');
 const auth = require('../middlewares/auth');
+const { logout } = require('../controllers/auth');
 
 router.get('/crash-test', () => {
   setTimeout(() => {
@@ -15,9 +16,7 @@ router.get('/crash-test', () => {
 
 router.use('/', authRouter);
 router.use(auth);
-router.post('/signout', (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Выход' });
-});
+router.post('/signout', logout);
 
 router.use('/users', usersRouter);
 router.use('/cards', cardsRouter);

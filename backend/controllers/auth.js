@@ -56,4 +56,18 @@ const createUser = (req, res, next) => {
     });
 };
 
-module.exports = { createUser, login };
+const logout = (req, res, next) => {
+  try {
+    res
+      .clearCookie('jwt', {
+        httpOnly: true,
+        sameSite: NODE_ENV === 'production' ? true : 'none',
+        secure: true,
+      })
+      .send({ message: 'Выход' });
+  } catch (error) {
+    next(new BadRequestError(error.message));
+  }
+};
+
+module.exports = { createUser, login, logout };
