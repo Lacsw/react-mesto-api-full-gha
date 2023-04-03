@@ -210,7 +210,7 @@ function App() {
   };
 
   const handleLogout = () => {
-    // Cookie.remove('jwt');
+    Cookie.remove('jwt');
     setLoggedIn(false);
     navigate('/sing-in');
   };
