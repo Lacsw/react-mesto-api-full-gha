@@ -86,22 +86,17 @@ function App() {
   }
 
   useEffect(() => {
-    const token = Cookie.get('jwt');
-    
-    if (token) {
-      auth
-        .checkAuth()
-        .then((data) => {
-          setLoggedIn(true);
-          setUserEmail(data.email);
-          navigate('/');
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    auth
+      .checkAuth()
+      .then((data) => {
+        setLoggedIn(true);
+        setUserEmail(data.email);
+        navigate('/');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [navigate]);
-
 
   useEffect(() => {
     if (loggedIn) {
@@ -200,8 +195,7 @@ function App() {
   const handleLogin = (formValue) => {
     auth
       .login(formValue)
-      .then((data) => {
-        Cookie.set('jwt', data.token);
+      .then(() => {
         setLoggedIn(true);
         navigate('/', { replace: true });
       })
@@ -216,14 +210,17 @@ function App() {
   };
 
   const handleLogout = () => {
-    Cookie.remove('jwt');
+    // Cookie.remove('jwt');
     setLoggedIn(false);
     navigate('/sing-in');
   };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header userEmail={userEmail} onLogout={handleLogout} />
+      <Header
+        userEmail={userEmail}
+        onLogout={handleLogout}
+      />
 
       <Routes>
         <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
@@ -247,7 +244,10 @@ function App() {
           path='/sign-up'
           element={<Register onRegister={handelRegisterUser} />}
         />
-        <Route path='/sign-in' element={<Login handleLogin={handleLogin} />} />
+        <Route
+          path='/sign-in'
+          element={<Login handleLogin={handleLogin} />}
+        />
       </Routes>
 
       <Footer />
@@ -281,7 +281,10 @@ function App() {
         onClose={closeAllPopups}
         name='image'
       />
-      <InfoTooltip state={infoTooltipState} onClose={closeAllPopups} />
+      <InfoTooltip
+        state={infoTooltipState}
+        onClose={closeAllPopups}
+      />
     </CurrentUserContext.Provider>
   );
 }

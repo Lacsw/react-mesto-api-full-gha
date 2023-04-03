@@ -30,7 +30,8 @@ const login = (req, res, next) => {
         .cookie('jwt', token, {
           maxAge: 3600000,
           httpOnly: true,
-          sameSite: true,
+          sameSite: NODE_ENV === 'production' ? true : 'none',
+          secure: true,
         })
         .send({ token });
     })
