@@ -17,40 +17,40 @@ const getUser = (req, res, next) => {
   const { userId } = req.params;
 
   if (!mongoose.isValidObjectId(userId)) {
-    throw new BadRequestError('Невалидный ID');
+    next(new BadRequestError('Невалидный ID'));
+  } else {
+    User.findById(userId, undefined, { runValidators: true })
+      .orFail(() => {
+        next(new NotFoundError('Пользователя не существует'));
+      })
+      .then((user) => {
+        res.status(HTTP_STATUS_OK).send(user);
+      })
+      .catch(next);
   }
-
-  User.findById(userId, undefined, { runValidators: true })
-    .orFail(() => {
-      throw new NotFoundError('Пользователя не существует');
-    })
-    .then((user) => {
-      res.status(HTTP_STATUS_OK).send(user);
-    })
-    .catch(next);
 };
 
 const updateUser = (req, res, next, data) => {
   const userId = req.user._id;
 
   if (!mongoose.isValidObjectId(userId)) {
-    throw new BadRequestError('Невалидный ID');
+    next(new BadRequestError('Невалидный ID'));
+  } else {
+    User.findByIdAndUpdate(userId, data, { runValidators: true, new: true })
+      .orFail(() => {
+        next(new NotFoundError('Пользователя не существует'));
+      })
+      .then((newInfo) => {
+        res.status(HTTP_STATUS_OK).send(newInfo);
+      })
+      .catch((error) => {
+        if (error instanceof mongoose.Error.ValidationError) {
+          next(new BadRequestError('Ошибка валидации'));
+        } else {
+          next(error);
+        }
+      });
   }
-
-  User.findByIdAndUpdate(userId, data, { runValidators: true, new: true })
-    .orFail(() => {
-      next(new NotFoundError('Пользователя не существует'));
-    })
-    .then((newInfo) => {
-      res.status(HTTP_STATUS_OK).send(newInfo);
-    })
-    .catch((error) => {
-      if (error instanceof mongoose.Error.ValidationError) {
-        next(new BadRequestError('Ошибка валидации'));
-      } else {
-        next(error);
-      }
-    });
 };
 
 const updateUserInfo = (req, res, next) => {
@@ -70,10 +70,6 @@ const updateUserAvatar = (req, res, next) => {
 
 const getUserInfo = (req, res, next) => {
   const userId = req.user._id;
-
-  if (!mongoose.isValidObjectId(userId)) {
-    throw new BadRequestError('Невалидный ID');
-  }
 
   User.findById(userId, undefined, { runValidators: true })
     .orFail(() => {

@@ -66,7 +66,7 @@ const logout = (req, res, next) => {
       })
       .send({ message: 'Выход' });
   } catch (error) {
-    next(new BadRequestError(error.message));
+    next(error);
   }
 };
 

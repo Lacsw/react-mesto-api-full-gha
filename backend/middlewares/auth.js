@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
   ) {
     token = req.headers.authorization.replace('Bearer ', '');
   } else {
-    next(new UnauthorizedError('Необходима авторизация'));
+    return next(new UnauthorizedError('Необходима авторизация'));
   }
 
   try {
@@ -26,7 +26,7 @@ module.exports = (req, res, next) => {
     );
     req.user = payload;
   } catch (error) {
-    next(new UnauthorizedError('Необходима авторизация'));
+    return next(new UnauthorizedError('Необходима авторизация'));
   }
-  next();
+  return next();
 };
