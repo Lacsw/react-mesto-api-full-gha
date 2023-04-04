@@ -33,7 +33,7 @@ const login = (req, res, next) => {
           sameSite: NODE_ENV === 'production' ? true : 'none',
           secure: true,
         })
-        .send({ token });
+        .send({ message: 'Вы вошли в акканут' });
     })
     .catch(next);
 };
