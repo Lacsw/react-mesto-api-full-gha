@@ -31,9 +31,9 @@ const login = (req, res, next) => {
           maxAge: 3600000,
           httpOnly: true,
           sameSite: NODE_ENV === 'production' ? true : 'none',
-          secure: true,
+          secure: NODE_ENV === 'production',
         })
-        .send({ message: 'Вы вошли в акканут' });
+        .send({ token: 'Вы вошли в акканут' });
     })
     .catch(next);
 };
