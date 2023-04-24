@@ -62,7 +62,7 @@ const logout = (req, res, next) => {
       .clearCookie('jwt', {
         httpOnly: true,
         sameSite: NODE_ENV === 'production' ? true : 'none',
-        secure: true,
+        secure: NODE_ENV === 'production',
       })
       .send({ message: 'Выход' });
   } catch (error) {
